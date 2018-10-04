@@ -23,12 +23,11 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color:'blue'
+      color:'pink'
     }
   }
 
   componentDidMount(){
-    console.log(NetworkService.getData().then());
     NetworkService.getData().then(value => {
       this.setState({
         networkData: value
@@ -45,7 +44,7 @@ export default class HomeScreen extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState){
     if(nextState.color === 'blue'){
-      alert('Sorry mate. I hate to be blue again!');
+      alert('Sorry mate. I hate blue color!');
       return false;
     }
 
@@ -75,6 +74,10 @@ export default class HomeScreen extends React.Component {
               <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
             </View>
             {this.renderNetworkData()}
+            {this.state.newPlayerName ?
+            <MonoText style={styles.codeHighlightText}>{this.state.newPlayerName} has joined the game</MonoText>
+            :
+            null}
           </View>
         </ScrollView>
           {/* //View for button */}
@@ -103,6 +106,13 @@ export default class HomeScreen extends React.Component {
                 }}
               />
             </View>
+            <View style={styles.buttonContainer}>
+              <Button color='black' title="New player"
+                  onPress = {() => {
+                  this.setState({newPlayerName: '2nd player'});
+                }}
+              />
+            </View> 
           </View>
       </View>
     );
@@ -212,7 +222,7 @@ const styles = StyleSheet.create({
     color: '#2e78b7',
   },
   horizonContainer: {
-    flex: 1,
+    flex: 0.5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
